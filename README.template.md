@@ -17,7 +17,11 @@ This is an abstract specification of the bytecode instruction set architecture
 for the [Ribbon](https://ribbon-lang.github.io) programming language. The full
 specification is presented below in human-readable format, and is also exported
 as a Zig module for code generation purposes
-(see [tools/ISA.zig](tools/ISA.zig#L79) for example usage)
+(see [src/Templater.zig](src/Templater.zig#L79) for example usage)
+
+For the actual bytecode implementation, see [rbc](https://github.com/ribbon-lang/rbc)
+
+For the virtual machine implementation, see [rvm](https://github.com/ribbon-lang/rvm)
 
 
 ## Contents
