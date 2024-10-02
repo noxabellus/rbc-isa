@@ -21,6 +21,10 @@ specification is presented below in human-readable format, and is also exported
 as a Zig module for code generation purposes
 (see [src/Templater.zig](src/Templater.zig#L79) for example usage)
 
+For the actual bytecode implementation, see [rbc](https://github.com/ribbon-lang/rbc)
+
+For the virtual machine implementation, see [rvm](https://github.com/ribbon-lang/rvm)
+
 
 ## Contents
 
