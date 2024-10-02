@@ -86,7 +86,7 @@ fn body(out: anytype) !void {
         }
 
         inline for (category.kinds) |kind| {
-            try out.print("##### {s}\n", .{ kind.base_name });
+            try out.print("##### {s}\n", .{ comptime kind.humanFriendlyName() });
 
             try out.print("{s}\n", .{ kind.description });
 

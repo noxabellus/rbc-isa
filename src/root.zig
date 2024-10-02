@@ -199,18 +199,8 @@ pub const Instructions = &[_]InstructionCategory {
              , .operands = &[_]OperandDescriptor { .register }
             },
             .{ .prefix = "tail"
-             , .suffix = "v"
-             , .description = "Call a dynamic function in tail position, and place the result in the caller's return register"
-             , .operands = &[_]OperandDescriptor { .register, .register }
-            },
-            .{ .prefix = "tail"
              , .suffix = "im"
              , .description = "Call a static function in tail position, expecting no return value (discards the result, if there is one)"
-             , .operands = &[_]OperandDescriptor { .function_index }
-            },
-            .{ .prefix = "tail"
-             , .suffix = "im_v"
-             , .description = "Call a static function in tail position, expecting a return value (places the result in the caller's return register)"
              , .operands = &[_]OperandDescriptor { .function_index }
             },
          }
@@ -300,122 +290,110 @@ pub const Instructions = &[_]InstructionCategory {
             },
          }
         },
-        .{ .base_name = "read_global"
+        .{ .base_name = "read"
          , .description =
-            \\Copy a number of bits from the global designated by the first operand into the register provided in the second operand
+             \\Copy a number of bits from the value designated by the first operand into the register provided in the second operand
          , .instructions = &[_]InstructionDescriptor {
-            .{ .suffix = "8"
+            .{ .suffix = "global_8"
              , .description = "Copy 8 bits from the global into the register"
              , .operands = &[_]OperandDescriptor { .global_index, .register }
             },
-            .{ .suffix = "16"
+            .{ .suffix = "global_16"
              , .description = "Copy 16 bits from the global into the register"
              , .operands = &[_]OperandDescriptor { .global_index, .register }
             },
-            .{ .suffix = "32"
+            .{ .suffix = "global_32"
              , .description = "Copy 32 bits from the global into the register"
              , .operands = &[_]OperandDescriptor { .global_index, .register }
             },
-            .{ .suffix = "64"
+            .{ .suffix = "global_64"
              , .description = "Copy 64 bits from the global into the register"
              , .operands = &[_]OperandDescriptor { .global_index, .register }
             },
-         },
-        },
-        .{ .base_name = "read_upvalue"
-         , .description =
-             \\Copy a number of bits from the upvalue designated by the first operand into the register provided in the second operand
-         , .instructions = &[_]InstructionDescriptor {
-             .{ .suffix = "8"
+             .{ .suffix = "upvalue_8"
              , .description = "Copy 8 bits from the upvalue into the register"
              , .operands = &[_]OperandDescriptor { .upvalue_index, .register },
              },
-             .{ .suffix = "16"
+             .{ .suffix = "upvalue_16"
              , .description = "Copy 16 bits from the upvalue into the register"
              , .operands = &[_]OperandDescriptor { .upvalue_index, .register },
              },
-             .{ .suffix = "32"
+             .{ .suffix = "upvalue_32"
              , .description = "Copy 32 bits from the upvalue into the register"
              , .operands = &[_]OperandDescriptor { .upvalue_index, .register },
              },
-             .{ .suffix = "64"
+             .{ .suffix = "upvalue_64"
              , .description = "Copy 64 bits from the upvalue into the register"
              , .operands = &[_]OperandDescriptor { .upvalue_index, .register },
              },
          }
         },
-        .{ .base_name = "write_global"
+        .{ .base_name = "write"
          , .description =
-            \\Copy a number of bits from the value designated by the first operand into the global provided in the second operand
+            \\Copy a number of bits from the value designated by the first operand into the value provided in the second operand
          , .instructions = &[_]InstructionDescriptor {
-            .{ .suffix = "8"
-             , .description = "Copy 8 bits from the register into the global"
+            .{ .suffix = "global_8"
+             , .description = "Copy 8 bits from the register into the designated global"
              , .operands = &[_]OperandDescriptor { .register, .global_index }
             },
-            .{ .suffix = "16"
-             , .description = "Copy 16 bits from the register into the global"
+            .{ .suffix = "global_16"
+             , .description = "Copy 16 bits from the register into the designated global"
              , .operands = &[_]OperandDescriptor { .register, .global_index }
             },
-            .{ .suffix = "32"
-             , .description = "Copy 32 bits from the register into the global"
+            .{ .suffix = "global_32"
+             , .description = "Copy 32 bits from the register into the designated global"
              , .operands = &[_]OperandDescriptor { .register, .global_index }
             },
-            .{ .suffix = "64"
-             , .description = "Copy 64 bits from the register into the global"
+            .{ .suffix = "global_64"
+             , .description = "Copy 64 bits from the register into the designated global"
              , .operands = &[_]OperandDescriptor { .register, .global_index }
             },
-            .{ .suffix = "8_im"
-             , .description = "Copy 8 bits from the immediate into the global"
+            .{ .suffix = "global_8_im"
+             , .description = "Copy 8 bits from the immediate into the designated global"
              , .operands = &[_]OperandDescriptor { .byte, .global_index }
             },
-            .{ .suffix = "16_im"
-             , .description = "Copy 16 bits from the immediate into the global"
+            .{ .suffix = "global_16_im"
+             , .description = "Copy 16 bits from the immediate into the designated global"
              , .operands = &[_]OperandDescriptor { .short, .global_index }
             },
-            .{ .suffix = "32_im"
-             , .description = "Copy 32 bits from the immediate into the global"
+            .{ .suffix = "global_32_im"
+             , .description = "Copy 32 bits from the immediate into the designated global"
              , .operands = &[_]OperandDescriptor { .immediate, .global_index }
             },
-            .{ .suffix = "64_im"
-             , .description = "Copy 64 bits from the immediate into the global"
+            .{ .suffix = "global_64_im"
+             , .description = "Copy 64 bits from the immediate into the designated global"
              , .operands = &[_]OperandDescriptor { .global_index }
              , .wide_immediate = true
             },
-         }
-        },
-        .{ .base_name = "write_upvalue"
-         , .description =
-            \\Copy a number of bits from the value designated by the first operand into the upvalue provided in the second operand
-         , .instructions = &[_]InstructionDescriptor {
-             .{ .suffix = "8"
+             .{ .suffix = "upvalue_8"
               , .description = "Copy 8 bits from the register into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .register, .upvalue_index }
              },
-             .{ .suffix = "16"
+             .{ .suffix = "upvalue_16"
               , .description = "Copy 16 bits from the register into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .register, .upvalue_index }
              },
-             .{ .suffix = "32"
+             .{ .suffix = "upvalue_32"
               , .description = "Copy 32 bits from the register into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .register, .upvalue_index }
              },
-             .{ .suffix = "64"
+             .{ .suffix = "upvalue_64"
               , .description = "Copy 64 bits from the register into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .register, .upvalue_index }
              },
-             .{ .suffix = "8_im"
+             .{ .suffix = "upvalue_8_im"
               , .description = "Copy 8 bits from the immediate into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .byte, .upvalue_index }
              },
-             .{ .suffix = "16_im"
+             .{ .suffix = "upvalue_16_im"
               , .description = "Copy 16 bits from the immediate into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .short, .upvalue_index }
              },
-             .{ .suffix = "32_im"
+             .{ .suffix = "upvalue_32_im"
               , .description = "Copy 32 bits from the register into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .immediate, .upvalue_index }
              },
-             .{ .suffix = "64_im"
+             .{ .suffix = "upvalue_64_im"
               , .description = "Copy 64 bits from the immediate into the designated upvalue"
               , .operands = &[_]OperandDescriptor { .upvalue_index }
               , .wide_immediate = true
@@ -2428,7 +2406,8 @@ pub const Instructions = &[_]InstructionCategory {
             },
          }
         },
-        .{ .base_name = "to"
+        .{ .display_name = "cast"
+         , .base_name = "to"
          , .description =
             \\Convert a value in a register to a different type, with the result placed in a register designated by the second operand
          , .instructions = &[_]InstructionDescriptor {
@@ -2619,9 +2598,14 @@ pub const InstructionCategory = struct {
 };
 
 pub const InstructionKind = struct {
+    display_name: ?[:0]const u8 = null,
     base_name: [:0]const u8,
     description: [:0]const u8,
     instructions: []const InstructionDescriptor,
+
+    pub fn humanFriendlyName(comptime kind: InstructionKind) [:0]const u8 {
+        return kind.display_name orelse kind.base_name;
+    }
 };
 
 pub const InstructionDescriptor = struct {
