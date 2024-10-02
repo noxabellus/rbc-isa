@@ -1,0 +1,6 @@
+.vscode
+.depr
+.zig-cache
+zig-out
+NOTES.md
+rvm.svg
